@@ -75,8 +75,8 @@ variable acl_rules {
 
 
 variable tier_1_cidr_blocks {
-  description = "A list of tier subnet IPs"
-  type        = list(string)
+  description = "A list of address prefixes for each zone"
+  type        = list
   default     = [
     "172.16.10.128/27", 
     "172.16.20.128/27",
@@ -84,14 +84,6 @@ variable tier_1_cidr_blocks {
   ] 
 }
 
-variable tier_2_cidr_blocks {
-  description = "A list of tier subnet IPs"
-  type        = list(string)
-  default     = [
-    "172.16.40.0/25", 
-    "172.16.20.0/25"
-  ]  
-}
 
 ##############################################################################
 
