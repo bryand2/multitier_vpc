@@ -63,7 +63,7 @@ resource ibm_is_subnet subnet {
   vpc             = ibm_is_vpc.vpc.id
   zone            = "${var.ibm_region}-${(count.index % var.zones) + 1}"
 
-  ipv4_cidr_block = element(ibm_is_vpc_address_prefix.subnet_prefix.*.cidr, count.index)
+  ipv4_cidr_block = element(ibm_is_vpc_address_prefix.address_prefixes.*.cidr, count.index)
 
   #network_acl     = var.enable_acl_id ? var.acl_id : null
   #public_gateway  = length(var.public_gateways) > 0 ? element(var.public_gateways, count.index) : null
