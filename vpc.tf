@@ -6,12 +6,16 @@
 
 ##############################################################################
 # Create a VPC
+#
+# address_prefix_management set to false because we do not want to auto
+# create default address prefixes when VPC is created. We will add our own.
 ##############################################################################
 
 resource ibm_is_vpc vpc {
   name           = var.vpc_name
   resource_group = data.ibm_resource_group.resource_group.id
   classic_access = var.classic_access
+  address_prefix_management = false 
 }
 
 ##############################################################################

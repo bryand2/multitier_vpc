@@ -30,11 +30,6 @@ variable resource_group {
     default     = "bryantech"
 }
 
-variable generation {
-  description = "generation for VPC"
-  type        = number
-  default     = 2
-}
 
 ##############################################################################
 
