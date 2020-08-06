@@ -84,6 +84,7 @@ variable tier_1_cidr_blocks {
   type        = list(string)
   default     = [
     "172.16.10.128/27", 
+    "172.16.20.128/27",
     "172.16.30.128/27"
   ] 
 }
@@ -105,7 +106,13 @@ variable tier_2_cidr_blocks {
 
 #############################################################################
 # Subnet variables
-##############################################################################
+#############################################################################
+
+variable zones {
+    description = "Number of zones to deploy subnets in"
+    type        = number
+    default     = 3
+}
 
 variable subnets_per_zone {
     description = "Number of subnets per zone"
@@ -113,11 +120,8 @@ variable subnets_per_zone {
     default     = 1
 }
 
-variable zones {
-    description = "Number of zones to deploy subnets in"
-    type        = number
-    default     = 3
-}
+
+
 
 variable public_gateways {
     description = "List of public gateway ids"
