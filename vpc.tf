@@ -9,7 +9,7 @@
 ##############################################################################
 
 resource ibm_is_vpc vpc {
-  name           = "${var.unique_id}-vpc"
+  name           = "${var.vpc_name}"
   resource_group = data.ibm_resource_group.resource_group.id
   classic_access = var.classic_access
 }
@@ -31,38 +31,34 @@ resource ibm_is_public_gateway multi_tier_gateway {
 ##############################################################################
 
 
+
 ##############################################################################
-# Tier 1
+# Creates addresses prefixes for VPC
 ##############################################################################
 
-module tier_1_subnets {
-  source           = "./module_vpc_tier" 
-  ibm_region       = var.ibm_region 
-  unique_id        = "${var.unique_id}-tier-1"                      
-  acl_id           = ibm_is_network_acl.multizone_acl.id
-  cidr_blocks      = var.tier_1_cidr_blocks
-  vpc_id           = ibm_is_vpc.vpc.id
-  public_gateways  = ibm_is_public_gateway.multi_tier_gateway.*.id
+resource ibm_is_vpc_address_prefix zone1_addr_prefix1 {
+  name  = "${var.unique_id}-zone1_addr_prefix1" 
+  zone  = "${var.ibm_region}-1"
+  vpc   = ibm_is_vpc.vpc.id
+  cidr  = element(var.tier_1_cidr_blocks, count.index)
+}
+
+resource ibm_is_vpc_address_prefix zone2_addr_prefix1 {
+  name  = "${var.unique_id}-zone2_addr_prefix1" 
+  zone  = "${var.ibm_region}-2"
+  vpc   = ibm_is_vpc.vpc.id
+  cidr  = element(var.tier_1_cidr_blocks, count.index)
+}
+
+resource ibm_is_vpc_address_prefix zone3_addr_prefix1 {
+  name  = "${var.unique_id}-zone2_addr_prefix1" 
+  zone  = "${var.ibm_region}-3"
+  vpc   = ibm_is_vpc.vpc.id
+  cidr  = element(var.tier_1_cidr_blocks, count.index)
 }
 
 ##############################################################################
 
-
-##############################################################################
-# Tier 2
-##############################################################################
-
-module tier_2_subnets {
-  source           = "./module_vpc_tier"
-  ibm_region       = var.ibm_region
-  unique_id        = "${var.unique_id}-tier-2"
-  acl_id           = ibm_is_network_acl.multizone_acl.id
-  cidr_blocks      = var.tier_2_cidr_blocks
-  vpc_id           = ibm_is_vpc.vpc.id
-  public_gateways  = ibm_is_public_gateway.multi_tier_gateway.*.id
-}
-
-##############################################################################
 
 
 
