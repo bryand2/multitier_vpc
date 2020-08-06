@@ -9,7 +9,7 @@
 ##############################################################################
 
 resource ibm_is_vpc vpc {
-  name           = "${var.vpc_name}"
+  name           = var.vpc_name
   resource_group = data.ibm_resource_group.resource_group.id
   classic_access = var.classic_access
 }
@@ -47,7 +47,7 @@ resource ibm_is_vpc_address_prefix zone2_addr_prefix1 {
   name  = "${var.unique_id}-zone2_addr_prefix1" 
   zone  = "${var.ibm_region}-2"
   vpc   = ibm_is_vpc.vpc.id
-  cidr  = element(var.tier_1_cidr_blocks, count.index)
+  cidr  = element(var.tier_2_cidr_blocks, count.index)
 }
 
 resource ibm_is_vpc_address_prefix zone3_addr_prefix1 {
