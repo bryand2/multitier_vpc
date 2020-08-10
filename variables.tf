@@ -76,7 +76,7 @@ variable acl_rules {
 
 variable tier_1_cidr_blocks {
   description = "A list of address prefixes for each zone"
-  type        = list
+  type        = list(string)
   default     = [
     "172.16.10.128/27", 
     "172.16.20.128/27",
