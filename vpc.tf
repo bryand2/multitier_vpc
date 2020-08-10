@@ -45,7 +45,7 @@ resource ibm_is_vpc_address_prefix address_prefixes {
   name  = "${var.unique_id}-prefix-zone-${(count.index % var.zones) + 1}" 
   zone  = "${var.ibm_region}-${(count.index % var.zones) + 1}"
   vpc   = ibm_is_vpc.vpc.id
-  cidr  = element(var.tier_1_cidr_blocks, count.index)
+  cidr  = element(var.tier_1_cidr_blocks2, count.index)
 }
 
 ##############################################################################

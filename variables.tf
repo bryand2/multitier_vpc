@@ -13,7 +13,7 @@ variable vpc_name {
 }
 
 variable unique_id {
-    description = "A unique prefix need to provision resources. Must begin with a letter"
+    description = "A unique short prefix. This will be used to name other related resources. Must begin with a letter"
     type        = string
     default     = "multitier"
 }
@@ -74,7 +74,7 @@ variable acl_rules {
 }
 
 
-variable tier_1_cidr_blocks {
+variable tier_1_cidr_blocks2 {
   description = "A list of address prefixes for each zone"
   type        = list(string)
   default     = [
