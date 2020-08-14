@@ -65,7 +65,7 @@ resource ibm_is_security_group_rule  allow_iks_worker_node_ports {
       group     = ibm_is_vpc.vpc.default_security_group
       direction = "inbound"
       remote    = "0.0.0.0/0"
-      tcp = {
+      tcp {
         port_min = 30000
         port_max = 32767
       }
