@@ -60,10 +60,10 @@ resource ibm_is_subnet subnet {
 # Update default security group to allow ports needed for IKS Worker Nodes
 ##############################################################################
 
-resource ibm_is_security_group_rule allow_iks_worker_node_ports {
+resource ibm_is_security_group_rule  allow_iks_worker_node_ports {
      #count     = var.default_sg_allow_inbound_traffic == true ? 1 : 0
       group     = ibm_is_vpc.vpc.default_security_group
-      direction = "ingress"
+      direction = "inbound"
       remote    = "0.0.0.0/0"
       tcp = {
         port_min = 30000
