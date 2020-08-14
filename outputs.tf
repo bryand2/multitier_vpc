@@ -12,11 +12,6 @@ output vpc_name {
   value       = ibm_is_vpc.vpc.name
 }
 
-output subnet_ids {
-  description = "IDs of subnets created for this tier"
-  value       = ibm_is_subnet.subnet.*.id
-}  
-
 output subnet_names {
   description = "Names of subnets created for this tier"
   value       = ibm_is_subnet.subnet.*.name

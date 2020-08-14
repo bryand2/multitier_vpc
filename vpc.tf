@@ -19,7 +19,6 @@ resource ibm_is_vpc vpc {
 
 
 
-
 ##############################################################################
 # Creates addresses prefixes for VPC
 ##############################################################################
@@ -35,7 +34,6 @@ resource ibm_is_vpc_address_prefix address_prefix {
 
 
 
-
 ##############################################################################
 # Create Subnets
 ##############################################################################
@@ -48,7 +46,7 @@ resource ibm_is_subnet subnet {
    zone            = "${var.ibm_region}-${count.index + 1}"
    ipv4_cidr_block = element(ibm_is_vpc_address_prefix.address_prefix.*.cidr, count.index)
    #network_acl    = var.enable_acl_id ? var.acl_id : null
-   #public_gateway = length(var.public_gateways) > 0 ? element(var.public_gateways, count.index) : null
+   public_gateway = length( ibm_is_public_gateway.public_gateway.*.id ) > 0 ? element( ibm_is_public_gateway.public_gateway.*.id , count.index) : null
 }
 
 
@@ -68,9 +66,6 @@ resource ibm_is_security_group_rule allow_iks_worker_node_ports {
    }
 }
 
-##############################################################################
-
-
 
 
 ##############################################################################
@@ -81,6 +76,8 @@ resource ibm_is_public_gateway public_gateway {
    count = var.enable_public_gateway ? length(var.cidr_blocks) : 0
    name  = "${var.unique_id}-pubgw-${count.index + 1}"
    vpc   = ibm_is_vpc.vpc.id
+   resource_group = data.ibm_resource_group.resource_group.id
    zone  = "${var.ibm_region}-${count.index + 1}"
+   tags = var.tags2
 }
 
