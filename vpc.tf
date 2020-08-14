@@ -59,6 +59,7 @@ resource ibm_is_subnet subnet {
 resource "ibm_is_security_group" "default_security_group" {
     name  = "${var.unique_id}-sg"
     id    = ibm_is_vpc.vpc.default_security_group
+    vpc   = ibm_is_vpc.vpc.id
 }
 
 resource ibm_is_security_group_rule allow_iks_worker_node_ports {
