@@ -14,7 +14,7 @@ resource ibm_is_vpc vpc {
    resource_group = data.ibm_resource_group.resource_group.id
    classic_access = var.classic_access
    address_prefix_management = "manual" 
-   tags = var.tags
+   tags = var.tags2
 }
 
 

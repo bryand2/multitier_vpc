@@ -19,9 +19,16 @@ variable ibm_region {
     default     = "us-south"
 }
 
-variable tags {
+variable tags2 {
     description = "Enter any tags that you want to associate with VPC and associated resources."
     type        = list(string)
+    default     = [
+      "aa-app-id:7129011",
+      "aa-application:travel",
+      "aa-costcenter:0900-1992",
+      "directlink:true",
+      "env:test"
+    ]
 }
 
 
