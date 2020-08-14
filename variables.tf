@@ -21,7 +21,7 @@ variable ibm_region {
 
 variable tags {
     description = "Enter any tags that you want to associate with VPC and associated resources."
-    type        = string
+    type        = list(string)
 }
 
 
