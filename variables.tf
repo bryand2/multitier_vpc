@@ -85,6 +85,11 @@ variable cidr_blocks {
 }
 
 
+variable allow_iks_worker_node_ports {
+  description = "In Gen2 the default security group denies all inbound traffic. If you are planning to deploy IKS into this VPC set this value to true so communication to the IKS worker node ports are allowed."
+  type        = bool
+  default     = true
+}
 
 ##############################################################################
 
