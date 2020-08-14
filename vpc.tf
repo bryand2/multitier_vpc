@@ -58,8 +58,8 @@ resource ibm_is_subnet subnet {
 
 resource "ibm_is_security_group" "default_security_group" {
     name  = "${var.unique_id}-sg"
-    vpc   = ibm_is_vpc.vpc.id
-    #group = ibm_is_vpc.vpc.default_security_group
+    #vpc   = ibm_is_vpc.vpc.id
+    group = ibm_is_vpc.vpc.default_security_group
 }
 
 resource ibm_is_security_group_rule allow_iks_worker_node_ports {
@@ -79,13 +79,13 @@ resource ibm_is_security_group_rule allow_iks_worker_node_ports {
 
 
 ##############################################################################
-# Public Gateways (Optional)
+# Enable public gateway if needed
 ##############################################################################
 
-#resource ibm_is_public_gateway multi_tier_gateway {
-#  count = var.enable_public_gateway ? 2 : 0
-#  name  = "${var.unique_id}-gateway-${count.index + 1}"
-#  vpc   = ibm_is_vpc.vpc.id
-#  zone  = "${var.ibm_region}-${count.index + 1}"
-#}
+resource ibm_is_public_gateway public_gateway {
+   count = var.enable_public_gateway ? length(var.cidr_blocks) : 0
+   name  = "${var.unique_id}-pubgw-${count.index + 1}"
+   vpc   = ibm_is_vpc.vpc.id
+   zone  = "${var.ibm_region}-${count.index + 1}"
+}
 

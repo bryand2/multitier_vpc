@@ -7,9 +7,19 @@ output vpc_id {
   value       = ibm_is_vpc.vpc.id
 }
 
+output vpc_name {
+  description = "Name of VPC created"
+  value       = ibm_is_vpc.vpc.name
+}
+
 output subnet_ids {
   description = "IDs of subnets created for this tier"
   value       = ibm_is_subnet.subnet.*.id
+}  
+
+output subnet_names {
+  description = "Names of subnets created for this tier"
+  value       = ibm_is_subnet.subnet.*.name
 }  
 
 output cidr_blocks {

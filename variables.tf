@@ -7,6 +7,23 @@ variable ibmcloud_api_key {
   type        = string
 }
 
+variable resource_group {
+    description = "Name of resource group to create VPC"
+    type        = string
+    default     = "bryantech"
+}
+
+variable ibm_region {
+    description = "IBM Cloud region where all resources will be deployed"
+    type        = string
+    default     = "us-south"
+}
+
+
+##############################################################################
+# VPC variables
+##############################################################################
+
 variable vpc_name {
     description = "Name of the vpc to be created"
     type        = string
@@ -18,25 +35,6 @@ variable unique_id {
     default     = "vpc"
 }
 
-variable ibm_region {
-    description = "IBM Cloud region where all resources will be deployed"
-    type        = string
-    default     = "us-south"
-}
-
-variable resource_group {
-    description = "Name of resource group to create VPC"
-    type        = string
-    default     = "bryantech"
-}
-
-
-##############################################################################
-
-
-##############################################################################
-# Network variables
-##############################################################################
 
 variable classic_access {
   description = "Enable VPC Classic Access. Note: only one VPC per region can have classic access"
@@ -44,6 +42,22 @@ variable classic_access {
   default     = false
 }
 
+variable cidr_blocks {
+  description = "A list of CIDR blocks for each zone"
+  type        = list(string)
+  default     = [
+    "172.16.10.128/27", 
+    "172.16.20.128/27",
+    "172.16.30.128/27"
+  ] 
+}
+
+
+variable allow_iks_worker_node_ports {
+  description = "In Gen2 the default security group denies all inbound traffic. If you are planning to deploy IKS into this VPC set this value to true so communication to the IKS worker node ports are allowed."
+  type        = bool
+  default     = true
+}
 
 variable enable_public_gateway {
   description = "Enable public gateways, true or false"
@@ -74,40 +88,3 @@ variable acl_rules {
 }
 
 
-variable cidr_blocks {
-  description = "A list of CIDR blocks for each zone"
-  type        = list(string)
-  default     = [
-    "172.16.10.128/27", 
-    "172.16.20.128/27",
-    "172.16.30.128/27"
-  ] 
-}
-
-
-variable allow_iks_worker_node_ports {
-  description = "In Gen2 the default security group denies all inbound traffic. If you are planning to deploy IKS into this VPC set this value to true so communication to the IKS worker node ports are allowed."
-  type        = bool
-  default     = true
-}
-
-##############################################################################
-
-
-
-
-
-#############################################################################
-# Subnet variables
-#############################################################################
-
-
-
-variable public_gateways {
-    description = "List of public gateway ids"
-    type        = list(string)
-    default     = []
-}
-
-
-##############################################################################
