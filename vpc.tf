@@ -24,7 +24,6 @@ resource ibm_is_vpc vpc {
 ##############################################################################
 
 resource ibm_is_vpc_address_prefix address_prefix {
-   #count = var.zones * var.subnets_per_zone
    count = length(var.cidr_blocks)
    name  = "${var.unique_id}-prefix-zone-${count.index + 1}" 
    zone  = "${var.ibm_region}-${count.index + 1}"
@@ -46,7 +45,8 @@ resource ibm_is_subnet subnet {
    zone            = "${var.ibm_region}-${count.index + 1}"
    ipv4_cidr_block = element(ibm_is_vpc_address_prefix.address_prefix.*.cidr, count.index)
    #network_acl    = var.enable_acl_id ? var.acl_id : null
-   public_gateway = length( ibm_is_public_gateway.public_gateway.*.id ) > 0 ? element( ibm_is_public_gateway.public_gateway.*.id , count.index) : null
+   #public_gateway = length( ibm_is_public_gateway.public_gateway.*.id ) > 0 ? element( ibm_is_public_gateway.public_gateway.*.id , count.index) : null
+   public_gateway = var.enable_public_gateway ? element( ibm_is_public_gateway.public_gateway.*.id , count.index) : null
 }
 
 
@@ -65,7 +65,6 @@ resource ibm_is_security_group_rule allow_iks_worker_node_ports {
       port_max = 32767
    }
 }
-
 
 
 ##############################################################################
