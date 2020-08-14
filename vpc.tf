@@ -10,10 +10,10 @@
 ##############################################################################
 
 resource ibm_is_vpc vpc {
-  name           = var.vpc_name
-  resource_group = data.ibm_resource_group.resource_group.id
-  classic_access = var.classic_access
-  address_prefix_management = "manual" 
+   name           = var.vpc_name
+   resource_group = data.ibm_resource_group.resource_group.id
+   classic_access = var.classic_access
+   address_prefix_management = "manual" 
 }
 
 
@@ -24,12 +24,12 @@ resource ibm_is_vpc vpc {
 ##############################################################################
 
 resource ibm_is_vpc_address_prefix address_prefix {
-  #count = var.zones * var.subnets_per_zone
-  count = length(var.cidr_blocks)
-  name  = "${var.unique_id}-prefix-zone-${count.index + 1}" 
-  zone  = "${var.ibm_region}-${count.index + 1}"
-  vpc   = ibm_is_vpc.vpc.id
-  cidr  = element(var.cidr_blocks, count.index)
+   #count = var.zones * var.subnets_per_zone
+   count = length(var.cidr_blocks)
+   name  = "${var.unique_id}-prefix-zone-${count.index + 1}" 
+   zone  = "${var.ibm_region}-${count.index + 1}"
+   vpc   = ibm_is_vpc.vpc.id
+   cidr  = element(var.cidr_blocks, count.index)
 }
 
 
@@ -40,32 +40,37 @@ resource ibm_is_vpc_address_prefix address_prefix {
 ##############################################################################
 
 resource ibm_is_subnet subnet {
-    count           = length(var.cidr_blocks)
-    name            = "${var.unique_id}-subnet-${count.index + 1}"
-    resource_group  = data.ibm_resource_group.resource_group.id
-    vpc             = ibm_is_vpc.vpc.id
-    zone            = "${var.ibm_region}-${count.index + 1}"
-    ipv4_cidr_block = element(ibm_is_vpc_address_prefix.address_prefix.*.cidr, count.index)
-    #network_acl    = var.enable_acl_id ? var.acl_id : null
-    #public_gateway = length(var.public_gateways) > 0 ? element(var.public_gateways, count.index) : null
+   count           = length(var.cidr_blocks)
+   name            = "${var.unique_id}-subnet-${count.index + 1}"
+   resource_group  = data.ibm_resource_group.resource_group.id
+   vpc             = ibm_is_vpc.vpc.id
+   zone            = "${var.ibm_region}-${count.index + 1}"
+   ipv4_cidr_block = element(ibm_is_vpc_address_prefix.address_prefix.*.cidr, count.index)
+   #network_acl    = var.enable_acl_id ? var.acl_id : null
+   #public_gateway = length(var.public_gateways) > 0 ? element(var.public_gateways, count.index) : null
 }
 
 
 
+##############################################################################
+# Update default security group
+##############################################################################
 
-##############################################################################
-# Update default security group to allow ports needed for IKS Worker Nodes
-##############################################################################
+resource "ibm_is_security_group" "default_security_group" {
+    name  = "${var.unique_id}-sg"
+    vpc   = ibm_is_vpc.vpc.id
+    group = ibm_is_vpc.vpc.default_security_group
+}
 
 resource ibm_is_security_group_rule allow_iks_worker_node_ports {
-    count     = var.allow_iks_worker_node_ports == true ? 1 : 0
-    group     = ibm_is_vpc.vpc.default_security_group
-    direction = "inbound"
-    remote    = "0.0.0.0/0"
-    tcp {
-        port_min = 30000
-        port_max = 32767
-    }
+   count     = var.allow_iks_worker_node_ports == true ? 1 : 0
+   group     = ibm_is_vpc.vpc.default_security_group
+   direction = "inbound"
+   remote    = "0.0.0.0/0"
+   tcp {
+      port_min = 30000
+      port_max = 32767
+   }
 }
 
 ##############################################################################
