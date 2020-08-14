@@ -47,6 +47,8 @@ resource ibm_is_subnet subnet {
    #network_acl    = var.enable_acl_id ? var.acl_id : null
    #public_gateway = length( ibm_is_public_gateway.public_gateway.*.id ) > 0 ? element( ibm_is_public_gateway.public_gateway.*.id , count.index) : null
    public_gateway = var.enable_public_gateway ? element( ibm_is_public_gateway.public_gateway.*.id , count.index) : null
+
+   depends_on = ["ibm_is_public_gateway.public_gateway"]
 }
 
 
