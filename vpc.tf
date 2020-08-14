@@ -40,12 +40,13 @@ resource ibm_is_vpc vpc {
 # Creates addresses prefixes for VPC
 ##############################################################################
 
-resource ibm_is_vpc_address_prefix address_prefixes {
-  count = var.zones * var.subnets_per_zone
-  name  = "${var.unique_id}-prefix-zone-${(count.index % var.zones) + 1}" 
-  zone  = "${var.ibm_region}-${(count.index % var.zones) + 1}"
+resource ibm_is_vpc_address_prefix address_prefix {
+  #count = var.zones * var.subnets_per_zone
+  count = length(var.cidr_blocks)
+  name  = "${var.unique_id}-prefix-zone-${count.index + 1}" 
+  zone  = "${var.ibm_region}-${count.index + 1}"
   vpc   = ibm_is_vpc.vpc.id
-  cidr  = element(var.tier_1_cidr_blocks2, count.index)
+  cidr  = element(var.cidr_blocks, count.index)
 }
 
 ##############################################################################
@@ -58,12 +59,14 @@ resource ibm_is_vpc_address_prefix address_prefixes {
 ##############################################################################
 
 resource ibm_is_subnet subnet {
-  count           = var.zones * var.subnets_per_zone
+  #count           = var.zones * var.subnets_per_zone
+  count = length(var.cidr_blocks)
   name            = "${var.unique_id}-subnet-${count.index + 1}"
+  resource_group = data.ibm_resource_group.resource_group.id
   vpc             = ibm_is_vpc.vpc.id
-  zone            = "${var.ibm_region}-${(count.index % var.zones) + 1}"
+  zone            = "${var.ibm_region}-${count.index + 1}"
 
-  ipv4_cidr_block = element(ibm_is_vpc_address_prefix.address_prefixes.*.cidr, count.index)
+  ipv4_cidr_block = element(ibm_is_vpc_address_prefix.address_prefix.*.cidr, count.index)
 
   #network_acl     = var.enable_acl_id ? var.acl_id : null
   #public_gateway  = length(var.public_gateways) > 0 ? element(var.public_gateways, count.index) : null

@@ -15,7 +15,7 @@ variable vpc_name {
 variable unique_id {
     description = "A unique short prefix. This will be used to name other related resources. Must begin with a letter"
     type        = string
-    default     = "multitier"
+    default     = "vpc"
 }
 
 variable ibm_region {
@@ -74,8 +74,8 @@ variable acl_rules {
 }
 
 
-variable tier_1_cidr_blocks2 {
-  description = "A list of address prefixes for each zone"
+variable cidr_blocks {
+  description = "A list of CIDR blocks for each zone"
   type        = list(string)
   default     = [
     "172.16.10.128/27", 
@@ -94,19 +94,6 @@ variable tier_1_cidr_blocks2 {
 #############################################################################
 # Subnet variables
 #############################################################################
-
-variable zones {
-    description = "Number of zones to deploy subnets in"
-    type        = number
-    default     = 3
-}
-
-variable subnets_per_zone {
-    description = "Number of subnets per zone"
-    type        = number
-    default     = 1
-}
-
 
 
 
