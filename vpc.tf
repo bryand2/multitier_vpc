@@ -1,13 +1,11 @@
 ##############################################################################
 # This file creates the VPC, Zones, subnets and public gateway for the VPC
-# a separate file sets up the load balancers, listeners, pools and members
 ##############################################################################
 
 
 ##############################################################################
 # Create a VPC
-#
-# address_prefix_management set to "manual" because we do not want to auto
+# Address_prefix_management set to "manual" because we do not want to auto
 # create default address prefixes when VPC is created. We will add our own.
 ##############################################################################
 
@@ -18,21 +16,6 @@ resource ibm_is_vpc vpc {
   address_prefix_management = "manual" 
 }
 
-##############################################################################
-
-
-##############################################################################
-# Public Gateways (Optional)
-##############################################################################
-
-#resource ibm_is_public_gateway multi_tier_gateway {
-#  count = var.enable_public_gateway ? 2 : 0
-#  name  = "${var.unique_id}-gateway-${count.index + 1}"
-#  vpc   = ibm_is_vpc.vpc.id
-#  zone  = "${var.ibm_region}-${count.index + 1}"
-#}
-
-##############################################################################
 
 
 
@@ -48,8 +31,6 @@ resource ibm_is_vpc_address_prefix address_prefix {
   vpc   = ibm_is_vpc.vpc.id
   cidr  = element(var.cidr_blocks, count.index)
 }
-
-##############################################################################
 
 
 
@@ -72,6 +53,37 @@ resource ibm_is_subnet subnet {
   #public_gateway  = length(var.public_gateways) > 0 ? element(var.public_gateways, count.index) : null
 }
 
+
+
+
+##############################################################################
+# Update default security group to allow ports needed for IKS Worker Nodes
 ##############################################################################
 
+resource ibm_is_security_group_rule allow_iks_worker_node_ports {
+     #count     = var.default_sg_allow_inbound_traffic == true ? 1 : 0
+      group     = ibm_is_vpc.vpc.default_security_group
+      direction = "ingress"
+      remote    = "0.0.0.0/0"
+      tcp = {
+        port_min = 30000
+        port_max = 32767
+      }
+}
+
+##############################################################################
+
+
+
+
+##############################################################################
+# Public Gateways (Optional)
+##############################################################################
+
+#resource ibm_is_public_gateway multi_tier_gateway {
+#  count = var.enable_public_gateway ? 2 : 0
+#  name  = "${var.unique_id}-gateway-${count.index + 1}"
+#  vpc   = ibm_is_vpc.vpc.id
+#  zone  = "${var.ibm_region}-${count.index + 1}"
+#}
 
