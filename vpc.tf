@@ -14,6 +14,7 @@ resource ibm_is_vpc vpc {
    resource_group = data.ibm_resource_group.resource_group.id
    classic_access = var.classic_access
    address_prefix_management = "manual" 
+   tags = var.tags
 }
 
 
@@ -55,12 +56,6 @@ resource ibm_is_subnet subnet {
 ##############################################################################
 # Update default security group
 ##############################################################################
-
-resource "ibm_is_security_group" "default_security_group" {
-    name  = "${var.unique_id}-sg"
-    id    = ibm_is_vpc.vpc.default_security_group
-    vpc   = ibm_is_vpc.vpc.id
-}
 
 resource ibm_is_security_group_rule allow_iks_worker_node_ports {
    count     = var.allow_iks_worker_node_ports == true ? 1 : 0
