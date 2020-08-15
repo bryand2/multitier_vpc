@@ -20,7 +20,7 @@ variable ibm_region {
 }
 
 variable tags2 {
-    description = "Enter any tags that you want to associate with VPC and associated resources."
+    description = "Enter any tags that you want to associate with VPC and associated resources"
     type        = list(string)
     default     = [
       "aa-app-id:7129011",
