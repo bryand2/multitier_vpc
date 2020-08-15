@@ -14,7 +14,7 @@ variable resource_group {
 }
 
 variable ibm_region {
-    description = "IBM Cloud region where all resources will be deployed.
+    description = "IBM Cloud region where all resources will be deployed."
 }
 
 variable tags2 {
