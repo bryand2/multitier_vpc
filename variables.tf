@@ -8,7 +8,7 @@ variable ibmcloud_api_key {
 }
 
 variable resource_group {
-    description = "Name of resource group to create VPC."
+    description = "Name of resource group to create VPC"
     type        = string
     default     = "bryantech"
 }
