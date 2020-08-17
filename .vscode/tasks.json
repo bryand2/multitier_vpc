@@ -8,7 +8,6 @@
             "type": "shell",
             "command": "make",
             "args": ["git-update"],
-            "problemMatcher": [],
             "group": "build",
             "presentation": {
                 "clear": true
@@ -19,7 +18,6 @@
             "type": "shell",
             "command": "make",
             "args": ["schematics-update"],
-            "problemMatcher": [],
             "group": "build",
             "presentation": {
                 "clear": true
@@ -30,7 +28,6 @@
             "type": "shell",
             "command": "make",
             "args": ["update-all"],
-            "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
