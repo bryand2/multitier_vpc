@@ -4,13 +4,42 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Git Push",
+            "label": "Git Update",
             "type": "shell",
             "command": "make git-update",
+            "problemMatcher": [],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            }
+        },
+        {
+            "label": "Schematics Update",
+            "type": "shell",
+            "command": "make schematics-update",
+            "problemMatcher": [],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            }
+        },
+        {
+            "label": "Update All",
+            "type": "shell",
+            "command": "make update-all",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
             }
         }
     ]

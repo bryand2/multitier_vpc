@@ -12,6 +12,7 @@ Thumbs.db
 # Other files
 .docs
 .gitattributes
+.vscode
 makefile
 
 
