@@ -14,7 +14,7 @@ resource ibm_is_vpc vpc {
    resource_group = data.ibm_resource_group.resource_group.id
    classic_access = var.classic_access
    address_prefix_management = "manual" 
-   tags = var.tags2
+   tags = var.tags
 }
 
 
@@ -77,6 +77,6 @@ resource ibm_is_public_gateway public_gateway {
    vpc   = ibm_is_vpc.vpc.id
    resource_group = data.ibm_resource_group.resource_group.id
    zone  = "${var.ibm_region}-${count.index + 1}"
-   tags = var.tags2
+   tags = var.tags
 }
 

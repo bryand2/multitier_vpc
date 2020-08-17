@@ -19,7 +19,7 @@ variable ibm_region {
     default     = "us-south"
 }
 
-variable tags2 {
+variable tags {
     description = "Enter any tags that you want to associate with VPC and associated resources."
     type        = list(string)
     default     = [
