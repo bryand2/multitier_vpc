@@ -6,39 +6,36 @@
         {
             "label": "Git Update",
             "type": "shell",
-            "command": "make git-update",
+            "command": "make",
+            "args": ["git-update"],
             "problemMatcher": [],
             "group": "build",
             "presentation": {
-                "reveal": "always",
-                "panel": "shared",
                 "clear": true
             }
         },
         {
             "label": "Schematics Update",
             "type": "shell",
-            "command": "make schematics-update",
+            "command": "make",
+            "args": ["schematics-update"],
             "problemMatcher": [],
             "group": "build",
             "presentation": {
-                "reveal": "always",
-                "panel": "shared",
                 "clear": true
             }
         },
         {
             "label": "Update All",
             "type": "shell",
-            "command": "make update-all",
+            "command": "make",
+            "args": ["update-all"],
             "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "presentation": {
-                "reveal": "always",
-                "panel": "shared",
                 "clear": true
             }
         }
