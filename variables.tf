@@ -54,16 +54,31 @@ variable classic_access {
   default     = false
 }
 
-variable cidr_blocks {
-  description = "A list of CIDR blocks for each zone"
-  type        = list(string)
-  default     = [
-    "172.16.10.128/27", 
-    "172.16.20.128/27",
-    "172.16.30.128/27"
-  ] 
+variable address_prefixes {
+    type = map(object({
+        name = string
+        cidr = string
+        zone = string
+    }))
+    default = {
+        prefix-1 = { name="address-prefix-1", cidr="172.16.10.128/27", zone="us-south-1"},
+        prefix-2 = { name="address-prefix-2", cidr="172.16.20.128/27", zone="us-south-2"},
+        prefix-3 = { name="address-prefix-3", cidr="172.16.30.128/27", zone="us-south-3"}
+    }
 }
 
+variable subnets {
+    type = map(object({
+        name = string
+        cidr = string
+        zone = string
+    }))
+    default = {
+        subnet-1 = {name="subnet-1", cidr="172.16.10.128/27", zone="us-south-1"},
+        subnet-2 = {name="subnet-2", cidr="172.16.20.128/27", zone="us-south-2"},
+        subnet-3 = {name="subnet-3", cidr="172.16.30.128/27", zone="us-south-3"}
+    }
+}
 
 variable allow_iks_worker_node_ports {
   description = "In Gen2 the default security group denies all inbound traffic. If you are planning to deploy IKS into this VPC set this value to true so communication to the IKS worker node ports are allowed."
@@ -98,5 +113,4 @@ variable acl_rules {
     }
   ]
 }
-
 

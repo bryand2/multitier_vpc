@@ -12,13 +12,13 @@ output vpc_name {
   value       = ibm_is_vpc.vpc.name
 }
 
-output subnet_names {
-  description = "Names of subnets created for this tier"
-  value       = ibm_is_subnet.subnet.*.name
-}  
+#output subnet_names {
+#  description = "Names of subnets created for this tier"
+#  value       = ibm_is_subnet.subnet.*.name
+#}  
 
-output cidr_blocks {
-  value       = ibm_is_subnet.subnet.*.ipv4_cidr_block
-}
+#output cidr_blocks {
+#  value       = ibm_is_subnet.subnet.*.ipv4_cidr_block
+#}
 
 ##############################################################################
