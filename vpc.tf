@@ -34,11 +34,10 @@ resource ibm_is_vpc vpc {
 resource ibm_is_vpc_address_prefix address_prefix {
    for_each = var.address_prefixes
    name  = each.value["name"]
-   zone  = each.value["zone"]
+   zone  = format("%s-%s", var.ibm_region, each.value["zone"])
    cidr  = each.value["cidr"]
    vpc   = ibm_is_vpc.vpc.id
 }
-
 
 
 ##############################################################################
@@ -59,11 +58,11 @@ resource ibm_is_vpc_address_prefix address_prefix {
 resource ibm_is_subnet subnet {
    for_each = var.subnets
    name            = each.value["name"]
-   zone            = each.value["zone"]
+   zone            = format("%s-%s", var.ibm_region, each.value["zone"])
    ipv4_cidr_block = each.value["cidr"]
    vpc             = ibm_is_vpc.vpc.id 
    resource_group  = data.ibm_resource_group.resource_group.id
-   depends_on = ["ibm_is_vpc_address_prefix.address_prefix"]
+   depends_on = [ibm_is_vpc_address_prefix.address_prefix]
 }
 
 

@@ -58,12 +58,12 @@ variable address_prefixes {
     type = map(object({
         name = string
         cidr = string
-        zone = string
+        zone = number
     }))
     default = {
-        prefix-1 = { name="address-prefix-1", cidr="172.16.10.128/27", zone="us-south-1"},
-        prefix-2 = { name="address-prefix-2", cidr="172.16.20.128/27", zone="us-south-2"},
-        prefix-3 = { name="address-prefix-3", cidr="172.16.30.128/27", zone="us-south-3"}
+        prefix-1 = { name="address-prefix-1", cidr="172.16.10.128/27", zone=1},
+        prefix-2 = { name="address-prefix-2", cidr="172.16.20.128/27", zone=2},
+        prefix-3 = { name="address-prefix-3", cidr="172.16.30.128/27", zone=3}
     }
 }
 
@@ -71,12 +71,12 @@ variable subnets {
     type = map(object({
         name = string
         cidr = string
-        zone = string
+        zone = number
     }))
     default = {
-        subnet-1 = {name="subnet-1", cidr="172.16.10.128/27", zone="us-south-1"},
-        subnet-2 = {name="subnet-2", cidr="172.16.20.128/27", zone="us-south-2"},
-        subnet-3 = {name="subnet-3", cidr="172.16.30.128/27", zone="us-south-3"}
+        subnet-1 = {name="subnet-1", cidr="172.16.10.128/27", zone="1"},
+        subnet-2 = {name="subnet-2", cidr="172.16.20.128/27", zone="2"},
+        subnet-3 = {name="subnet-3", cidr="172.16.30.128/27", zone="3"}
     }
 }
 
