@@ -18,7 +18,6 @@ resource ibm_is_vpc vpc {
 }
 
 
-
 ##############################################################################
 # Creates addresses prefixes for VPC
 ##############################################################################
@@ -36,17 +35,6 @@ resource ibm_is_vpc_address_prefix address_prefix {
 # Create Subnets
 ##############################################################################
 
-#resource ibm_is_subnet subnet {
-#   count           = length(var.cidr_blocks)
-#   name            = "${var.unique_id}-subnet-${count.index + 1}"
-#   resource_group  = data.ibm_resource_group.resource_group.id
-#   vpc             = ibm_is_vpc.vpc.id
-#   zone            = "${var.ibm_region}-${count.index + 1}"
-#   ipv4_cidr_block = element(ibm_is_vpc_address_prefix.address_prefix.*.cidr, count.index)
-#   public_gateway = var.enable_public_gateway ? element( ibm_is_public_gateway.public_gateway.*.id , count.index) : null
-#
-#   depends_on = ["ibm_is_public_gateway.public_gateway"]
-#}
 resource ibm_is_subnet subnet {
    for_each = var.subnets
    name            = each.value["name"]
@@ -54,6 +42,7 @@ resource ibm_is_subnet subnet {
    ipv4_cidr_block = each.value["cidr"]
    vpc             = ibm_is_vpc.vpc.id 
    resource_group  = data.ibm_resource_group.resource_group.id
+#   public_gateway = var.enable_public_gateway ? element( ibm_is_public_gateway.public_gateway.*.id , count.index) : null
    depends_on = [ibm_is_vpc_address_prefix.address_prefix]
 }
 
