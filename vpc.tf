@@ -63,6 +63,7 @@ resource ibm_is_subnet subnet {
    ipv4_cidr_block = each.value["cidr"]
    vpc             = ibm_is_vpc.vpc.id 
    resource_group  = data.ibm_resource_group.resource_group.id
+   depends_on = ["ibm_is_vpc_address_prefix.address_prefix"]
 }
 
 
