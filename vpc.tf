@@ -73,6 +73,27 @@ resource ibm_is_security_group_rule allow_iks_worker_node_ports {
    }
 }
 
+resource ibm_is_security_group_rule allow_ssh {
+   count     = var.allow_ssh == true ? 1 : 0
+   group     = ibm_is_vpc.vpc.default_security_group
+   direction = "inbound"
+   remote    = "0.0.0.0/0"
+   tcp {
+      port_min = 22
+      port_max = 22
+   }
+}
+
+resource ibm_is_security_group_rule allow_ping {
+   count     = var.allow_ping == true ? 1 : 0
+   group     = ibm_is_vpc.vpc.default_security_group
+   direction = "inbound"
+   remote    = "0.0.0.0/0"
+   icmp {
+        type = 8
+    }
+}
+
 
 ##############################################################################
 # Enable public gateway if needed

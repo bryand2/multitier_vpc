@@ -86,6 +86,18 @@ variable allow_iks_worker_node_ports {
   default     = true
 }
 
+variable allow_ssh {
+  description = "Set to true if the VPC's default security group should allow inbound SSH traffic."
+  type        = bool
+  default     = true
+}
+
+variable allow_ping {
+  description = "Set to true if the VPC's default security group should allow ICMP/Ping traffic."
+  type        = bool
+  default     = true
+}
+
 variable enable_public_gateway {
   description = "Enable public gateways, true or false"
   type        = bool
