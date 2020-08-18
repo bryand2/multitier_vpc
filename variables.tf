@@ -61,9 +61,9 @@ variable address_prefixes {
         zone = number
     }))
     default = {
-        prefix-1 = { name="address-prefix-1", cidr="172.16.10.128/27", zone=1},
-        prefix-2 = { name="address-prefix-2", cidr="172.16.20.128/27", zone=2},
-        prefix-3 = { name="address-prefix-3", cidr="172.16.30.128/27", zone=3}
+        prefix-1 = { name="address-prefix-1", cidr="172.16.10.128/27", zone="1"},
+        prefix-2 = { name="address-prefix-2", cidr="172.16.20.128/27", zone="2"},
+        prefix-3 = { name="address-prefix-3", cidr="172.16.30.128/27", zone="3"}
     }
 }
 

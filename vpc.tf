@@ -23,14 +23,6 @@ resource ibm_is_vpc vpc {
 # Creates addresses prefixes for VPC
 ##############################################################################
 
-#resource ibm_is_vpc_address_prefix address_prefix {
-#   count = length(var.cidr_blocks)
-#   name  = "${var.unique_id}-prefix-zone-${count.index + 1}" 
-#   zone  = "${var.ibm_region}-${count.index + 1}"
-#   vpc   = ibm_is_vpc.vpc.id
-#   cidr  = element(var.cidr_blocks, count.index)
-#}
-
 resource ibm_is_vpc_address_prefix address_prefix {
    for_each = var.address_prefixes
    name  = each.value["name"]
@@ -70,16 +62,16 @@ resource ibm_is_subnet subnet {
 # Update default security group
 ##############################################################################
 
-#resource ibm_is_security_group_rule allow_iks_worker_node_ports {
-#   count     = var.allow_iks_worker_node_ports == true ? 1 : 0
-#   group     = ibm_is_vpc.vpc.default_security_group
-#   direction = "inbound"
-#   remote    = "0.0.0.0/0"
-#   tcp {
-#      port_min = 30000
-#      port_max = 32767
-#   }
-#}
+resource ibm_is_security_group_rule allow_iks_worker_node_ports {
+   count     = var.allow_iks_worker_node_ports == true ? 1 : 0
+   group     = ibm_is_vpc.vpc.default_security_group
+   direction = "inbound"
+   remote    = "0.0.0.0/0"
+   tcp {
+      port_min = 30000
+      port_max = 32767
+   }
+}
 
 
 ##############################################################################
