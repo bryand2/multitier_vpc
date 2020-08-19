@@ -47,6 +47,29 @@ resource ibm_is_subnet subnet {
 }
 
 
+
+##############################################################################
+# Enable public gateway if needed
+##############################################################################
+
+#resource ibm_is_public_gateway public_gateway {
+#   count = var.enable_public_gateway ? length(var.cidr_blocks) : 0
+#   name  = "${var.unique_id}-pubgw-${count.index + 1}"
+#   vpc   = ibm_is_vpc.vpc.id
+#   resource_group = data.ibm_resource_group.resource_group.id
+#   zone  = "${var.ibm_region}-${count.index + 1}"
+#   tags = var.tags
+#}
+resource ibm_is_public_gateway public_gateway {
+   for_each = var.public_gateways
+   name  = each.value["name"]
+   vpc   = ibm_is_vpc.vpc.id
+   resource_group = data.ibm_resource_group.resource_group.id
+   zone  = format("%s-%s", var.ibm_region, each.value["zone"])
+   tags = var.tags
+}
+
+
 ##############################################################################
 # Update default security group
 ##############################################################################
@@ -83,17 +106,4 @@ resource ibm_is_security_group_rule allow_ping {
     }
 }
 
-
-##############################################################################
-# Enable public gateway if needed
-##############################################################################
-
-#resource ibm_is_public_gateway public_gateway {
-#   count = var.enable_public_gateway ? length(var.cidr_blocks) : 0
-#   name  = "${var.unique_id}-pubgw-${count.index + 1}"
-#   vpc   = ibm_is_vpc.vpc.id
-#   resource_group = data.ibm_resource_group.resource_group.id
-#   zone  = "${var.ibm_region}-${count.index + 1}"
-#   tags = var.tags
-#}
 
