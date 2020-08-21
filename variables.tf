@@ -72,7 +72,7 @@ variable subnets {
         name = string
         cidr = string
         zone = number
-        pubgw = boolean
+        pubgw = bool
     }))
     default = {
         subnet-1a = {name="subnet-1a", cidr="172.16.10.128/29", zone="1", pubgw="false"},
