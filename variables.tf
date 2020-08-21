@@ -72,13 +72,13 @@ variable subnets {
         name = string
         cidr = string
         zone = number
-        pubgw = string
+        pubgw = boolean
     }))
     default = {
-        subnet-1a = {name="subnet-1a", cidr="172.16.10.128/29", zone="1", pubgw=null},
-        subnet-1b = {name="subnet-1b", cidr="172.16.10.136/29", zone="1"},
-        subnet-2 = {name="subnet-2", cidr="172.16.20.128/27", zone="2"},
-        subnet-3 = {name="subnet-3", cidr="172.16.30.128/27", zone="3"}
+        subnet-1a = {name="subnet-1a", cidr="172.16.10.128/29", zone="1", pubgw="false"},
+        subnet-1b = {name="subnet-1b", cidr="172.16.10.136/29", zone="1", pubgw="false"},
+        subnet-2 = {name="subnet-2", cidr="172.16.20.128/27", zone="2", pubgw="false"},
+        subnet-3 = {name="subnet-3", cidr="172.16.30.128/27", zone="3", pubgw="false"}
     }
 }
 
