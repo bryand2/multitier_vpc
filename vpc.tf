@@ -36,14 +36,15 @@ resource ibm_is_vpc_address_prefix address_prefix {
 ##############################################################################
 
 resource ibm_is_subnet subnet {
-   for_each = var.subnets
-   name            = each.value["name"]
-   zone            = format("%s-%s", var.ibm_region, each.value["zone"])
-   ipv4_cidr_block = each.value["cidr"]
-   vpc             = ibm_is_vpc.vpc.id 
-   resource_group  = data.ibm_resource_group.resource_group.id
-#   public_gateway = var.enable_public_gateway ? element( ibm_is_public_gateway.public_gateway.*.id , count.index) : null
-   depends_on = [ibm_is_vpc_address_prefix.address_prefix]
+    for_each = var.subnets
+    name            = each.value["name"]
+    zone            = format("%s-%s", var.ibm_region, each.value["zone"])
+    ipv4_cidr_block = each.value["cidr"]
+    vpc             = ibm_is_vpc.vpc.id 
+    resource_group  = data.ibm_resource_group.resource_group.id
+#   public_gateway  = var.enable_public_gateway ? element( ibm_is_public_gateway.public_gateway.*.id , count.index) : null
+  #  public_gateway  = each.value["pubgw"] ? element( ibm_is_public_gateway.public_gateway.*.id , each.value["zone"]) : null
+    depends_on = [ibm_is_vpc_address_prefix.address_prefix]
 }
 
 
@@ -52,14 +53,6 @@ resource ibm_is_subnet subnet {
 # Enable public gateway if needed
 ##############################################################################
 
-#resource ibm_is_public_gateway public_gateway {
-#   count = var.enable_public_gateway ? length(var.cidr_blocks) : 0
-#   name  = "${var.unique_id}-pubgw-${count.index + 1}"
-#   vpc   = ibm_is_vpc.vpc.id
-#   resource_group = data.ibm_resource_group.resource_group.id
-#   zone  = "${var.ibm_region}-${count.index + 1}"
-#   tags = var.tags
-#}
 resource ibm_is_public_gateway public_gateway {
    for_each = var.public_gateways
    name  = each.value["name"]

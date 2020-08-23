@@ -76,7 +76,7 @@ variable subnets {
     }))
     default = {
         subnet-1a = {name="subnet-bastion", cidr="172.16.10.128/29", zone="1", pubgw="false"},
-        subnet-1b = {name="subnet-1", cidr="172.16.10.136/16", zone="1", pubgw="false"},
+        subnet-1b = {name="subnet-1", cidr="172.16.10.144/28", zone="1", pubgw="false"},
         subnet-2 = {name="subnet-2", cidr="172.16.20.128/27", zone="2", pubgw="false"},
         subnet-3 = {name="subnet-3", cidr="172.16.30.128/27", zone="3", pubgw="false"}
     }
