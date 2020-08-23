@@ -61,7 +61,7 @@ resource ibm_is_subnet subnet {
 #   tags = var.tags
 #}
 resource ibm_is_public_gateway public_gateway {
-  for_each = var.public_gateways
+   for_each = var.public_gateways
    name  = each.value["name"]
    vpc   = ibm_is_vpc.vpc.id
    resource_group = data.ibm_resource_group.resource_group.id
