@@ -19,7 +19,7 @@ output public_gateways {
 
 output public_gateway_ids {
     description = "public gateway ids"
-    value = public_gateway_ids
+    value = public_gateway_ids.*
 }
 
 #output subnet_names {
