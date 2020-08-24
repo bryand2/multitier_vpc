@@ -17,12 +17,14 @@ output public_gateways {
     value = ibm_is_public_gateway.public_gateway.*
 }
 
+# map of instance objects rather than a single object and attributes of instances must be specified by key
+# see https://www.terraform.io/docs/configuration/expressions.html#references-to-resource-attributes
 output test {
     description = "test"
     #value = ibm_is_public_gateway.public_gateway[index(ibm_is_public_gateway.public_gateway[*].zone, "us-south-1")]
     #value = values(ibm_is_public_gateway.public_gateway)[*].id
     #value =  index ( values(ibm_is_public_gateway.public_gateway)[*].zone, "us-south-2" ) 
-    value = values(ibm_is_public_gateway.public_gateway)[ index ( values(ibm_is_public_gateway.public_gateway)[*].zone, "us-south-2" ) ].id
+    value = values(ibm_is_public_gateway.public_gateway)[ index ( values(ibm_is_public_gateway.public_gateway)[*].zone, "us-south-1" ) ].id
 }
 
 #output subnet_names {
