@@ -17,6 +17,11 @@ output public_gateways {
     value = ibm_is_public_gateway.public_gateway.*
 }
 
+output public_gateway_ids {
+    description = "public gateway ids"
+    value = public_gateway_ids
+}
+
 #output subnet_names {
 #  description = "Names of subnets created for this tier"
 #  value       = ibm_is_subnet.subnet.*.name
