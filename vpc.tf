@@ -44,7 +44,7 @@ resource ibm_is_subnet subnet {
     resource_group  = data.ibm_resource_group.resource_group.id
 #   public_gateway  = var.enable_public_gateway ? element( ibm_is_public_gateway.public_gateway.*.id , count.index) : null
 #   public_gateway  = each.value["pubgw"] ? element( ibm_is_public_gateway.public_gateway.*.id , each.value["zone"]) : null
-#   public_gateway  = each.value["pubgw"] ? lookup(var.public_gateways, "zone", each.value["zone"])
+    public_gateway  = values(ibm_is_public_gateway.public_gateway)[ index ( values(ibm_is_public_gateway.public_gateway)[*].zone, format("%s-%s", var.ibm_region, each.value["zone"])  ) ].id
     depends_on = [ibm_is_vpc_address_prefix.address_prefix, ibm_is_public_gateway.public_gateway]
 }
 
