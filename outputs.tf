@@ -20,7 +20,7 @@ output public_gateways {
 output test {
     description = "test"
     #value = ibm_is_public_gateway.public_gateway[index(ibm_is_public_gateway.public_gateway[*].zone, "us-south-1")]
-    value = ibm_is_public_gateway.public_gateway.publicgw-1
+    value = values(ibm_is_public_gateway.public_gateway)[*].id
 }
 
 #output subnet_names {
