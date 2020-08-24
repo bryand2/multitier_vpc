@@ -89,7 +89,8 @@ variable public_gateways {
         zone = number
     }))
     default = {
-        publicgw-1 = {name="publicgw-1", zone="1"}
+        publicgw-1 = {name="publicgw-1", zone="1"},
+        publicgw-2 = {name="publicgw-2", zone="2"}
     }
 }
 
