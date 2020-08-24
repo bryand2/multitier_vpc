@@ -14,7 +14,7 @@ output vpc_name {
 
 output public_gateways {
     description = "Public gateways"
-    value = ibm_is_public_gateway.public_gateway.*.id
+    value = ibm_is_public_gateway.public_gateway.*
 }
 
 #output subnet_names {
