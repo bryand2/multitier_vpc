@@ -43,7 +43,7 @@ resource ibm_is_subnet subnet {
     vpc             = ibm_is_vpc.vpc.id 
     resource_group  = data.ibm_resource_group.resource_group.id
 #   public_gateway  = var.enable_public_gateway ? element( ibm_is_public_gateway.public_gateway.*.id , count.index) : null
-  #  public_gateway  = each.value["pubgw"] ? element( ibm_is_public_gateway.public_gateway.*.id , each.value["zone"]) : null
+#    public_gateway  = each.value["pubgw"] ? element( ibm_is_public_gateway.public_gateway.*.id , each.value["zone"]) : null
     depends_on = [ibm_is_vpc_address_prefix.address_prefix]
 }
 
@@ -61,6 +61,14 @@ resource ibm_is_public_gateway public_gateway {
    zone  = format("%s-%s", var.ibm_region, each.value["zone"])
    tags = var.tags
 }
+
+
+#locals {
+#  public_gateway_ids = [
+#    for i in ibm_is_public_gateway.public_gateway:
+#    i.id if contains(var.subnet_names, i.name)
+#  ]
+#}
 
 
 ##############################################################################
