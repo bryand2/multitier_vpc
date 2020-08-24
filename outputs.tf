@@ -17,9 +17,9 @@ output public_gateways {
     value = ibm_is_public_gateway.public_gateway.*
 }
 
-output public_gateway_ids {
-    description = "public gateway ids"
-    value = public_gateway_ids[0]
+output test {
+    description = "test"
+    value = element( ibm_is_public_gateway.public_gateway.*.id , "1") 
 }
 
 #output subnet_names {
