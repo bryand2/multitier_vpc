@@ -11,7 +11,7 @@
 
 resource ibm_is_vpc vpc {
    name           = var.vpc_name
-   resource_group = data.ibm_resource_group.resource_group.id
+   resource_group = ibm_resource_group.resourceGroup.id
    classic_access = var.classic_access
    address_prefix_management = "manual" 
    tags = var.tags
@@ -41,7 +41,7 @@ resource ibm_is_subnet subnet {
     zone            = format("%s-%s", var.ibm_region, each.value["zone"])
     ipv4_cidr_block = each.value["cidr"]
     vpc             = ibm_is_vpc.vpc.id 
-    resource_group  = data.ibm_resource_group.resource_group.id
+    resource_group  = ibm_resource_group.resourceGroup.id
 #   public_gateway  = var.enable_public_gateway ? element( ibm_is_public_gateway.public_gateway.*.id , count.index) : null
 #   public_gateway  = each.value["pubgw"] ? element( ibm_is_public_gateway.public_gateway.*.id , each.value["zone"]) : null
     public_gateway  = each.value["pubgw"] ?  values(ibm_is_public_gateway.public_gateway)[ index ( values(ibm_is_public_gateway.public_gateway)[*].zone, format("%s-%s", var.ibm_region, each.value["zone"])  ) ].id : null
@@ -60,7 +60,7 @@ resource ibm_is_public_gateway public_gateway {
    for_each = var.public_gateways
    name  = each.value["name"]
    vpc   = ibm_is_vpc.vpc.id
-   resource_group = data.ibm_resource_group.resource_group.id
+   resource_group  = ibm_resource_group.resourceGroup.id
    zone  = format("%s-%s", var.ibm_region, each.value["zone"])
    tags = var.tags
 }

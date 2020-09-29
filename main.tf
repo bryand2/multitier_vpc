@@ -16,7 +16,7 @@ provider ibm {
 # Resource Group where VPC will be created
 ##############################################################################
 
-data ibm_resource_group resource_group {
+resource ibm_resource_group resourceGroup {
   name = var.resource_group
 }
 
