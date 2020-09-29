@@ -10,7 +10,7 @@ variable ibmcloud_api_key {
 variable resource_group {
     description = "Name of resource group to create VPC."
     type        = string
-    default     = "bryantech"
+    default     = "scott-test-rg"
 }
 
 variable ibm_region {
@@ -39,6 +39,7 @@ variable tags {
 variable vpc_name {
     description = "Name of the vpc to be created"
     type        = string
+    default     = "scott-vpc-test"
 }
 
 variable unique_id {
